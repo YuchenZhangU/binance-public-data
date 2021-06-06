@@ -1,0 +1,13 @@
+#!/bin/bash
+# https://data.binance.vision/?prefix=data/spot/daily/klines/ETHBTC/1m/
+
+export_path='/Users/yuchenzhang/Documents/Reps/binance-public-data/fetched'
+ticker='BTCUSDT'
+
+
+python ./python/download-kline.py -s $ticker -i 1m -y 2017 2018 2019 2020 2021 -folder $export_path
+# python ./python/download-kline.py -s $ticker -i 1m -startDate 2021-06-01 -endDate 2021-06-05 -folder $export_path
+rm $export_path/*.csv
+cd $export_path/data/spot/monthly/klines/$ticker/1m/ && unzip '*.zip' && mv *.csv $export_path
+cd $export_path/data/spot/daily/klines/$ticker/1m/ && unzip '*.zip' && mv *.csv $export_path
+cat $export_path/*.csv >> $export_path/$ticker.csv
